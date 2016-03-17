@@ -26,7 +26,7 @@ files:
   - dea-hm-workspace/src/github.com/cloudfoundry/gosteno/syslog/*.go # gosub
   - dea-hm-workspace/src/github.com/cloudfoundry/gunk/workpool/*.go # gosub
   - dea-hm-workspace/src/github.com/cloudfoundry/hm9000/*.go # gosub
-  - dea-hm-workspace/src/github.com/cloudfoundry/hm9000/actualstatehandlers/*.go # gosub
+  - dea-hm-workspace/src/github.com/cloudfoundry/hm9000/actualstatelisteners/*.go # gosub
   - dea-hm-workspace/src/github.com/cloudfoundry/hm9000/analyzer/*.go # gosub
   - dea-hm-workspace/src/github.com/cloudfoundry/hm9000/apiserver/*.go # gosub
   - dea-hm-workspace/src/github.com/cloudfoundry/hm9000/apiserver/handlers/*.go # gosub
