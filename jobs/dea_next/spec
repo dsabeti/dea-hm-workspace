@@ -2,6 +2,10 @@
 name: dea_next
 
 description: "The DEA is responsible for running customer applications and maintaining associated routes as live. It also periodically advertises its capacity to the Cloud Controllers and accepts requests to start and stop applications."
+consumes:
+  - name: nats
+    type: nats
+
 
 templates:
   dea.yml.erb: config/dea.yml

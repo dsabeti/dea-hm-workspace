@@ -22,13 +22,26 @@
 
     "dropsonde_port": <%= p("metron_agent.dropsonde_incoming_port") %>,
 
+<%
+  nats_config = nil
+  if_link("nats") do |nats|
+    nats_config = {}
+    nats_config["machines"] = nats.p("nats.machines")
+    nats_config["user"] = nats.p("nats.user")
+    nats_config["password"] = nats.p("nats.password")
+    nats_config["port"] = nats.p("nats.port")
+  end
+
+  nats_config = p("nats") unless nats_config
+%>
+
     "nats": <%=
-  p("nats.machines").collect do |addr|
+  nats_config["machines"].collect do |addr|
     {
       "host" => addr,
-      "port" => p("nats.port"),
-      "user" => p("nats.user"),
-      "password" => p("nats.password")
+      "port" => nats_config["port"],
+      "user" => nats_config["user"],
+      "password" => nats_config["password"]
     }
   end.to_json
 %>
