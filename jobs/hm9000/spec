@@ -6,6 +6,8 @@ description: "The HM9000 periodically compares expected list of running applicat
 consumes:
   - name: nats
     type: nats
+  - name: etcd
+    type: etcd
 
 templates:
   hm9000_listener_ctl: bin/hm9000_listener_ctl
