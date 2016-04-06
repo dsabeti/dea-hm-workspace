@@ -11,18 +11,7 @@
 
     "store_schema_version": 4,
 
-<%
-  etcd_config = nil
-  if_link("etcd") do |etcd|
-    etcd_config = {}
-    etcd_config["machines"] = etcd.p("etcd.machines")
-  end
-
-  etcd_config = p("loggregator.etcd") unless etcd_config
-%>
-
-
-    "store_urls": [<%= etcd_config["machines"].map{|addr| "\"http://#{addr}:4001\""}.join(",")%>],
+    "store_urls": [<%= link("etcd").instances.map{|instance| "\"http://#{instance.address}:4001\""}.join(",")%>],
 
     "log_level": "INFO",
     "log_directory": "/var/vcap/sys/log/hm9000",
@@ -35,26 +24,16 @@
     "dropsonde_port": <%= p("metron_agent.dropsonde_incoming_port") %>,
 
 <%
-  nats_config = nil
-  if_link("nats") do |nats|
-    nats_config = {}
-    nats_config["machines"] = nats.p("nats.machines")
-    nats_config["user"] = nats.p("nats.user")
-    nats_config["password"] = nats.p("nats.password")
-    nats_config["port"] = nats.p("nats.port")
-  end
-
-  nats_config = p("nats") unless nats_config
-%>
-
-    "nats": <%=
-  nats_config["machines"].collect do |addr|
+  nats = link("nats")
+  nats_config = nats.instances.collect do |instance|
     {
-      "host" => addr,
-      "port" => nats_config["port"],
-      "user" => nats_config["user"],
-      "password" => nats_config["password"]
+      "host" => instance.address,
+      "port" => nats.p("nats.port"),
+      "user" => nats.p("nats.user"),
+      "password" => nats.p("nats.password")
     }
-  end.to_json
+  end
 %>
+
+  "nats": <%= nats_config.to_json %>
 }
